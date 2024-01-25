@@ -1,12 +1,25 @@
 {
   "name": "kibokogetpricehook",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Collection of functions to call to get price of various tokens on diffrent blockchain networks using onchain feeds",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "getPrice",
+    "token",
+    "crypto",
+    "kiboko",
+    "kibokogetpricehook"
+  ],
+  "author": "timothyAgevi",
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^18.2.0",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  }
 }
