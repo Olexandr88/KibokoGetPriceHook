@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+// import { useState } from "react";
 import { CairoCustomEnum, Contract } from "starknet";
 import PRAGMA_ABI, { PRAGMA_CONTRACT_ADDRESS } from "./pragmaabi";
 import { BigNumber } from "bignumber.js";
 
 // state for currency rate
-const [exchangeRate, setExchangeRate] = useState<number>(0);
-const [baseCoinRate, setBaseCoin] = useState<number>(0);
+// const [exchangeRate, setExchangeRate] = useState<number>(0);
+// const [baseCoinRate, setBaseCoin] = useState<number>(0);
 const pragma_contract = new Contract(PRAGMA_ABI, PRAGMA_CONTRACT_ADDRESS);
 
 //helper functions
@@ -59,8 +59,8 @@ export const getExchangeRate = async (symbol: any, amount: any) => {
         const baseCoinRate: number = data.data.rates.KES;
         const amountInKesReceived: number = amount * baseCoinRate;
         //TODOS: Add deduction and make it accept diffrent currencies
-        setExchangeRate(Number(amountInKesReceived.toFixed(2))); // convert to number and set state
-        setBaseCoin(baseCoinRate);
+        // setExchangeRate(Number(amountInKesReceived.toFixed(2))); // convert to number and set state
+        // setBaseCoin(baseCoinRate);
         return amountInKesReceived;
       } else {
         console.log("No exchange rate data found for KES");
