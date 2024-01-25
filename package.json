@@ -6,6 +6,9 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "homepage": "hhtps://google.com",
+  "repository":{
+    "url":"https://github.com/KibokoDao-Africa/KibokoGetPriceHook.git"
+  },
   "scripts": {
     "build": "tsup"
   },
