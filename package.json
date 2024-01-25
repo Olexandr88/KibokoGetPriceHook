@@ -19,7 +19,7 @@
     "kiboko",
     "kibokogetpricehook"
   ],
-  "author": "timothyAgevi",
+  
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^18.2.48",
