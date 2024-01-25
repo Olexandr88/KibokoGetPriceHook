@@ -6,8 +6,8 @@
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "homepage": "hhtps://google.com",
-  "repository":{
-    "url":"https://github.com/KibokoDao-Africa/KibokoGetPriceHook.git"
+  "repository": {
+    "url": "https://github.com/KibokoDao-Africa/KibokoGetPriceHook.git"
   },
   "scripts": {
     "build": "tsup"
@@ -23,9 +23,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/react": "^18.2.48",
+    "axios": "^1.6.2",
+    "bignumber.js": "^9.1.2",
     "react": "^18.2.0",
+    "starknet": "^5.24.3",
     "tsup": "^8.0.1",
-    "typescript": "^5.3.3",
-    "axios": "^1.6.2"
+    "typescript": "^5.3.3"
   }
 }
