@@ -1,4 +1,4 @@
-[
+const PRAGMA_ABI=[
     {
       "type": "impl",
       "name": "IOracleImpl",
@@ -1097,3 +1097,5 @@
       ]
     }
   ]
+  export const PRAGMA_CONTRACT_ADDRESS="0x06df335982dddce41008e4c03f2546fa27276567b5274c7d0c1262f3c2b5d167"
+  export default PRAGMA_ABI
