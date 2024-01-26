@@ -39,7 +39,6 @@ module.exports = __toCommonJS(src_exports);
 
 // src/functions.ts
 var import_axios = __toESM(require("axios"));
-var import_react = require("react");
 var import_starknet = require("starknet");
 
 // src/pragmaabi.ts
@@ -1147,8 +1146,6 @@ var pragmaabi_default = PRAGMA_ABI;
 
 // src/functions.ts
 var import_bignumber = require("bignumber.js");
-var [exchangeRate, setExchangeRate] = (0, import_react.useState)(0);
-var [baseCoinRate, setBaseCoin] = (0, import_react.useState)(0);
 var pragma_contract = new import_starknet.Contract(pragmaabi_default, PRAGMA_CONTRACT_ADDRESS);
 function getRealPrice(val) {
   let decimals = (0, import_bignumber.BigNumber)(val.decimals).toNumber();
@@ -1189,10 +1186,8 @@ var getExchangeRate = async (symbol, amount) => {
     if (response.status === 200) {
       const data = response.data;
       if (data && data.data && data.data.rates && data.data.rates.KES) {
-        const baseCoinRate2 = data.data.rates.KES;
-        const amountInKesReceived = amount * baseCoinRate2;
-        setExchangeRate(Number(amountInKesReceived.toFixed(2)));
-        setBaseCoin(baseCoinRate2);
+        const baseCoinRate = data.data.rates.KES;
+        const amountInKesReceived = amount * baseCoinRate;
         return amountInKesReceived;
       } else {
         console.log("No exchange rate data found for KES");

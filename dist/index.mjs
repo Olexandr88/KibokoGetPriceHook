@@ -1,6 +1,5 @@
 // src/functions.ts
 import axios from "axios";
-import { useState } from "react";
 import { CairoCustomEnum, Contract } from "starknet";
 
 // src/pragmaabi.ts
@@ -1108,8 +1107,6 @@ var pragmaabi_default = PRAGMA_ABI;
 
 // src/functions.ts
 import { BigNumber } from "bignumber.js";
-var [exchangeRate, setExchangeRate] = useState(0);
-var [baseCoinRate, setBaseCoin] = useState(0);
 var pragma_contract = new Contract(pragmaabi_default, PRAGMA_CONTRACT_ADDRESS);
 function getRealPrice(val) {
   let decimals = BigNumber(val.decimals).toNumber();
@@ -1150,10 +1147,8 @@ var getExchangeRate = async (symbol, amount) => {
     if (response.status === 200) {
       const data = response.data;
       if (data && data.data && data.data.rates && data.data.rates.KES) {
-        const baseCoinRate2 = data.data.rates.KES;
-        const amountInKesReceived = amount * baseCoinRate2;
-        setExchangeRate(Number(amountInKesReceived.toFixed(2)));
-        setBaseCoin(baseCoinRate2);
+        const baseCoinRate = data.data.rates.KES;
+        const amountInKesReceived = amount * baseCoinRate;
         return amountInKesReceived;
       } else {
         console.log("No exchange rate data found for KES");
