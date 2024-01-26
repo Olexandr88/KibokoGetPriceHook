@@ -1,11 +1,11 @@
 {
   "name": "kibokogetpricehook",
   "version": "0.0.2",
-  "description": "Collection of functions to call to get price of various tokens on diffrent blockchain networks using onchain feeds",
+  "description": "Collection of functions to call to get price of various tokens on different blockchain networks using onchain feeds",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
-  "homepage": "hhtps://google.com",
+  "homepage": "https://google.com",
   "repository": {
     "url": "https://github.com/KibokoDao-Africa/KibokoGetPriceHook.git"
   },
@@ -19,14 +19,18 @@
     "kiboko",
     "kibokogetpricehook"
   ],
-  
   "license": "MIT",
-  "devDependencies": {
-    "@types/react": "^18.2.48",
+  "dependencies": {
     "axios": "^1.6.2",
     "bignumber.js": "^9.1.2",
+    "starknet": "^5.24.3"
+  },
+  "peerDependencies": {
     "react": "^18.2.0",
-    "starknet": "^5.24.3",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
     "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   }
