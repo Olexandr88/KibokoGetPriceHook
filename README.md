@@ -52,7 +52,7 @@ export const getPairPrice = async (pair: string) => {
 ```
 ## NPM Package Snapshot
 
-[https://photos.google.com/search/_tra_/photo/AF1QipOe9j5vOtnddEhYmJ-HbeDZb855mXnc2KEQGaFI]
+![Alt text](<IMG-20240127-WA0128 (1).jpg>)
 
 ## License
 
