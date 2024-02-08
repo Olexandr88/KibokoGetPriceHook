@@ -72,3 +72,30 @@ export const getExchangeRate = async (symbol: any, amount: any) => {
     console.log("Unable to get exchange rate", error);
   }
 };
+
+export const getCurrencyExchangeRate = async (symbol: any, amount: any, currency: any) => {
+  //return based on the currency specified
+  try {
+    const response = await axios.get(
+      `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
+    );
+
+    // Check if the response is successful
+    if (response.status === 200) {
+      const data = response.data;
+      if (data && data.data && data.data.rates && data.data.rates[currency]) {
+        const baseCoinRate: number = data.data.rates[currency];
+        // return the amount in the specified currency
+        const amountInCurrencyReceived: number = amount * baseCoinRate;
+        return amountInCurrencyReceived;
+       
+      } else {
+        console.log("No exchange rate data found for KES");
+      }
+    } else {
+      console.log("Failed to fetch exchange rate from Coinbase API");
+    }
+  } catch (error) {
+    console.log("Unable to get exchange rate", error);
+  };
+};
