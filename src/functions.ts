@@ -73,24 +73,25 @@ export const getExchangeRate = async (symbol: any, amount: any) => {
   }
 };
 
-export const getCurrencyExchangeRate = async (symbol: any, amount: any, currency: any) => {
+export const getCurrencyExchangeRate = async (symbol: any, amount: any, rates: any) => {
   //return based on the currency specified
   try {
     const response = await axios.get(
       `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
+
     );
 
     // Check if the response is successful
     if (response.status === 200) {
       const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates[currency]) {
-        const baseCoinRate: number = data.data.rates[currency];
+      if (data && data.data && data.data.rates && data.data.rates[rates]) {
+        const baseCoinRate: number = data.data.rates[rates];
         // return the amount in the specified currency
         const amountInCurrencyReceived: number = amount * baseCoinRate;
         return amountInCurrencyReceived;
        
       } else {
-        console.log("No exchange rate data found for {currency}", currency);
+        console.log("No exchange rate data found for {currency}", rates);
       }
     } else {
       console.log("Failed to fetch exchange rate from Coinbase API");
