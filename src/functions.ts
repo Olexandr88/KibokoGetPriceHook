@@ -90,7 +90,7 @@ export const getCurrencyExchangeRate = async (symbol: any, amount: any, currency
         return amountInCurrencyReceived;
        
       } else {
-        console.log("No exchange rate data found for KES");
+        console.log("No exchange rate data found for {currency}", currency);
       }
     } else {
       console.log("Failed to fetch exchange rate from Coinbase API");
