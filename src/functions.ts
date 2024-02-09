@@ -186,9 +186,6 @@ export const getOnrampExchangeRateInKES = async (symbol: any, amount: any) => {
   }
 };
 //function to get OffRampExchangeRate in KES
-import axios from 'axios';
-
-// Function to get OffRamp Exchange Rate for KES with 5% adjustment
 export const getOffRampExchangeRateInKES = async (symbol: any, amount: any) => {
   // Return based on the currency specified
   try {
