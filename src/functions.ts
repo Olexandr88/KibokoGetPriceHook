@@ -114,8 +114,8 @@ export const getOnrampExchangeRate = async (symbol: any, amount: any, rates: any
       const data = response.data;
       if (data && data.data && data.data.rates && data.data.rates[rates]) {
         const baseCoinRate: number = data.data.rates[rates];
-        // Adding 7% to the baseCoinRate (Onramp adjustment)
-        const adjustedRate: number = baseCoinRate * 1.07;
+        // Adding 5% to the baseCoinRate (Onramp adjustment)
+        const adjustedRate: number = baseCoinRate * 1.05;
         // return the amount in the specified currency with the adjusted rate
         const amountInCurrencyReceived: number = amount * adjustedRate;
         return amountInCurrencyReceived;
@@ -129,4 +129,31 @@ export const getOnrampExchangeRate = async (symbol: any, amount: any, rates: any
     console.log("Unable to get exchange rate", error);
   }
 };
+//function to get OffRampExchangeRate based on currency/rate specified
+export const getOfframpExchangeRate = async (symbol: any, amount: any, rates: any) => {
+  //return based on the currency specified
+  try {
+    const response = await axios.get(
+      `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
+    );
 
+    // Check if the response is successful
+    if (response.status === 200) {
+      const data = response.data;
+      if (data && data.data && data.data.rates && data.data.rates[rates]) {
+        const baseCoinRate: number = data.data.rates[rates];
+        // Reducing 5% to the baseCoinRate (Onramp adjustment)
+        const adjustedRate: number = baseCoinRate * 0.95;
+        // return the amount in the specified currency with the adjusted rate
+        const amountInCurrencyReceived: number = amount * adjustedRate;
+        return amountInCurrencyReceived;
+      } else {
+        console.log("No exchange rate data found for {currency}", rates);
+      }
+    } else {
+      console.log("Failed to fetch exchange rate from Coinbase API");
+    }
+  } catch (error) {
+    console.log("Unable to get exchange rate", error);
+  }
+};
