@@ -185,3 +185,33 @@ export const getOnrampExchangeRateInKES = async (symbol: any, amount: any) => {
     console.log("Unable to get exchange rate", error);
   }
 };
+//function to get OffRampExchangeRate in KES
+import axios from 'axios';
+
+// Function to get OffRamp Exchange Rate for KES with 5% adjustment
+export const getOffRampExchangeRateInKES = async (symbol: any, amount: any) => {
+  // Return based on the currency specified
+  try {
+    const response = await axios.get(
+      `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
+    );
+    // Check if the response is successful
+    if (response.status === 200) {
+      const data = response.data;
+      if (data && data.data && data.data.rates && data.data.rates['KES']) {
+        const baseCoinRate: number = data.data.rates['KES'];
+        // Subtracting 5% from the baseCoinRate (OffRamp adjustment)
+        const adjustedRate: number = baseCoinRate * 0.95;
+        // Return the amount in KES with the adjusted rate
+        const amountInKES: number = amount * adjustedRate;
+        return amountInKES;
+      } else {
+        console.log("No exchange rate data found for KES");
+      }
+    } else {
+      console.log("Failed to fetch exchange rate from Coinbase API");
+    }
+  } catch (error) {
+    console.log("Unable to get exchange rate", error);
+  }
+};
