@@ -29,7 +29,59 @@ const getTokenPairPrice = () => {
   })
 }
 ```
-## Functionality
+
+```ts
+import { getExchangeRate } from "kibokogetpricehook";
+
+// Function to handle token selection changes
+const handleTokenChangeForExchangeRate = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const token = event.target.value;
+  setSelectedToken(token); // Update the state with the selected token
+  getExchangeRate(token, numberOfTokens); // Fetch exchange rate for the new token
+};
+
+// Function to handle changes in the number of tokens
+const handleNumberOfTokensChangeForExchangeRate = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const tokens = event.target.value;
+  setNumberOfTokens(tokens); // Update the state with the new number of tokens
+  try {
+    // Fetch and set the exchange rate amount received for the given number of tokens
+    const amountInKesReceived = await getExchangeRate(selectedToken, tokens);
+    setAmountToReceive(String(amountInKesReceived)); // Update the state with the amount to receive
+    console.log(amountInKesReceived); // Optional: log the amount received
+  } catch (error) {
+    console.error("Error fetching exchange rate", error);
+  }
+};
+```
+
+```ts
+import { getCurrencyExchangeRate } from "kibokogetpricehook";
+
+// Function to handle token selection changes
+const handleTokenChangeForExchangeRate = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const token = event.target.value;
+    setSelectedToken(token); // Update the state with the selected token
+    getCurrencyExchangeRate(token, numberOfTokens, ratesData); // Fetch exchange rate for the new token with additional rates data
+};
+
+// Function to handle changes in the number of tokens
+const handleNumberOfTokensChangeForExchangeRate = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const tokens = event.target.value;
+    setNumberOfTokens(tokens); // Update the state with the new number of tokens
+    try {
+      // Fetch and set the currency amount received for the given number of tokens
+      const amountInCurrencyReceived = await getCurrencyExchangeRate(selectedToken, tokens, ratesData);
+      setAmountToReceive(String(amountInCurrencyReceived)); // Update the state with the amount to receive in the specified currency
+      console.log(amountInCurrencyReceived); // Optional: log the currency amount received
+    } catch (error) {
+      console.error("Error fetching exchange rate", error);
+    }
+};
+
+```
+
+<!-- ## Functionality
 getPairPrice
 
 The getPairPrice function provides real-time price information for a specified cryptocurrency pair.
@@ -50,6 +102,7 @@ export const getPairPrice = async (pair: string) => {
   }
 };
 ```
+ -->
 ## NPM Package Snapshot
 
 ![Alt text](<IMG-20240127-WA0128 (1).jpg>)
