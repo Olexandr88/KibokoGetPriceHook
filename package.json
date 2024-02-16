@@ -1,6 +1,6 @@
 {
   "name": "kibokogetpricehook",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Collection of functions to call to get price of various tokens on different blockchain networks using onchain feeds",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
