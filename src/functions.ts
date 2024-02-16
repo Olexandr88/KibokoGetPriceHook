@@ -34,31 +34,7 @@ useEffect(() => {
 }, [fromCurrency, toCurrency, numberOfTokens]); // Watch for changes in fromCurrency, toCurrency, and numberOfTokens
 
 //REal Function to be called byusers
-async function getCurrencyExchangeRate(
-  fromCurrency: string,
-  toCurrency: string,
-  amount: number
-) {
-  try {
-    const response = await axios.get(
-      `https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`
-    );
-    if (response.status === 200) {
-      const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
-        const baseCoinRate: number = data.data.rates[toCurrency];
-        const amountInCurrencyReceived: number = amount * baseCoinRate;
-        return amountInCurrencyReceived;
-      } else {
-        console.log("No exchange rate data found for", toCurrency);
-      }
-    } else {
-      console.log("Failed to fetch exchange rate from Coinbase API");
-    }
-  } catch (error) {
-    console.log("Unable to get exchange rate", error);
-  }
-}
+
 //converts hexa to readable rwsult
 export function getRealPrice(val: any) {
   let decimals = BigNumber(val.decimals).toNumber();
@@ -118,7 +94,34 @@ export const getExchangeRate = async (symbol: any, amount: any) => {
     console.log("Unable to get exchange rate", error);
   }
 };
+//function to get exchange rate based on currency specified by user
+export const getCurrencyExchangeRate = async (
+  fromCurrency: string,
+  toCurrency: string,
+  amount: number
+) => {
+  try {
+    const response = await axios.get(
+      `https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`
+    );
 
+    // Check if the response is successful
+    if (response.status === 200) {
+      const data = response.data;
+      if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
+        const baseCoinRate: number = data.data.rates[toCurrency];
+        const amountInCurrencyReceived: number = amount * baseCoinRate;
+        return amountInCurrencyReceived;
+      } else {
+        console.log(`No exchange rate data found for ${toCurrency}`);
+      }
+    } else {
+      console.log("Failed to fetch exchange rate from Coinbase API");
+    }
+  } catch (error) {
+    console.log("Unable to get exchange rate", error);
+  }
+};
 //function to get onRampCurrencyExchangeRate based on the currency/rate specified
 export const getOnrampCurrencyExchangeRate = async (
   fromCurrency: string,
