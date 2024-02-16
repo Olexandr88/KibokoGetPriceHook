@@ -152,30 +152,25 @@ export const getOnrampCurrencyExchangeRate = async (
 };
 
 
-//function to get OffRampExchangeRate based on currency/rate specified
-export const getOfframpExchangeRate = async (
-  symbol: any,
-  amount: any,
-  rates: any
+//function to get OffRampCurrencyExchangeRate based on currency/rate specified
+export const getOfframpCurrencyExchangeRate = async (
+  fromCurrency: string,
+  toCurrency: string,
+  amount: number
 ) => {
-  //return based on the currency specified
   try {
-    const response = await axios.get(
-      `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
-    );
-
-    // Check if the response is successful
+    const response = await axios.get(`https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`);
     if (response.status === 200) {
       const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates[rates]) {
-        const baseCoinRate: number = data.data.rates[rates];
-        // Reducing 5% to the baseCoinRate (Onramp adjustment)
+      if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
+        const baseCoinRate: number = data.data.rates[toCurrency];
+        // Reducing 5% to the baseCoinRate (Offramp adjustment)
         const adjustedRate: number = baseCoinRate * 0.95;
-        // return the amount in the specified currency with the adjusted rate
+        // Calculate the amount in the specified currency with the adjusted rate
         const amountInCurrencyReceived: number = amount * adjustedRate;
         return amountInCurrencyReceived;
       } else {
-        console.log("No exchange rate data found for {currency}", rates);
+        console.log("No exchange rate data found for", toCurrency);
       }
     } else {
       console.log("Failed to fetch exchange rate from Coinbase API");
@@ -184,6 +179,7 @@ export const getOfframpExchangeRate = async (
     console.log("Unable to get exchange rate", error);
   }
 };
+
 //function to get OnRampExchangeRate in KES
 export const getOnrampExchangeRateInKES = async (symbol: any, amount: any) => {
   // Return based on the currency specified
