@@ -1,56 +1,65 @@
 import axios from "axios";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CairoCustomEnum, Contract } from "starknet";
 import PRAGMA_ABI, { PRAGMA_CONTRACT_ADDRESS } from "./pragmaabi";
 import { BigNumber } from "bignumber.js";
-
 
 const pragma_contract = new Contract(PRAGMA_ABI, PRAGMA_CONTRACT_ADDRESS);
 
 //helper functions
 const [fromCurrency, setFromCurrency] = useState<string>("BTC");
-  const [toCurrency, setToCurrency] = useState<string>("KES");
-  const [numberOfTokens, setNumberOfTokens] = useState<number | "">(0);
-  const [recipientPhoneNumber, setRecipientPhoneNumber] = useState<string>("");
-  const [amountToReceive, setAmountToReceive] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
+const [toCurrency, setToCurrency] = useState<string>("KES");
+const [numberOfTokens, setNumberOfTokens] = useState<number | "">(0);
+const [recipientPhoneNumber, setRecipientPhoneNumber] = useState<string>("");
+const [amountToReceive, setAmountToReceive] = useState<string>("");
+const [errorMessage, setErrorMessage] = useState<string>("");
 
-  useEffect(() => {
-    const fetchRatesData = async () => {
-      try {
-        const tokens = typeof numberOfTokens === "number" ? numberOfTokens : parseFloat(numberOfTokens); // Convert numberOfTokens to number
-        const amountInCurrencyReceived = await getCurrencyExchangeRate(fromCurrency, toCurrency, tokens);
-        setAmountToReceive(String(amountInCurrencyReceived));
-      } catch (error) {
-        console.error("Error fetching exchange rates", error);
-      }
-    };
-    fetchRatesData();
-  }, [fromCurrency, toCurrency, numberOfTokens]); // Watch for changes in fromCurrency, toCurrency, and numberOfTokens
-
-
-
-
-  //REal Function to be called byusers
-  async function getCurrencyExchangeRate(fromCurrency: string, toCurrency: string, amount: number) {
+useEffect(() => {
+  const fetchRatesData = async () => {
     try {
-      const response = await axios.get(`https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`);
-      if (response.status === 200) {
-        const data = response.data;
-        if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
-          const baseCoinRate: number = data.data.rates[toCurrency];
-          const amountInCurrencyReceived: number = amount * baseCoinRate;
-          return amountInCurrencyReceived;
-        } else {
-          console.log("No exchange rate data found for", toCurrency);
-        }
-      } else {
-        console.log("Failed to fetch exchange rate from Coinbase API");
-      }
+      const tokens =
+        typeof numberOfTokens === "number"
+          ? numberOfTokens
+          : parseFloat(numberOfTokens); // Convert numberOfTokens to number
+      const amountInCurrencyReceived = await getCurrencyExchangeRate(
+        fromCurrency,
+        toCurrency,
+        tokens
+      );
+      setAmountToReceive(String(amountInCurrencyReceived));
     } catch (error) {
-      console.log("Unable to get exchange rate", error);
+      console.error("Error fetching exchange rates", error);
     }
+  };
+  fetchRatesData();
+}, [fromCurrency, toCurrency, numberOfTokens]); // Watch for changes in fromCurrency, toCurrency, and numberOfTokens
+
+//REal Function to be called byusers
+async function getCurrencyExchangeRate(
+  fromCurrency: string,
+  toCurrency: string,
+  amount: number
+) {
+  try {
+    const response = await axios.get(
+      `https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`
+    );
+    if (response.status === 200) {
+      const data = response.data;
+      if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
+        const baseCoinRate: number = data.data.rates[toCurrency];
+        const amountInCurrencyReceived: number = amount * baseCoinRate;
+        return amountInCurrencyReceived;
+      } else {
+        console.log("No exchange rate data found for", toCurrency);
+      }
+    } else {
+      console.log("Failed to fetch exchange rate from Coinbase API");
+    }
+  } catch (error) {
+    console.log("Unable to get exchange rate", error);
   }
+}
 //converts hexa to readable rwsult
 export function getRealPrice(val: any) {
   let decimals = BigNumber(val.decimals).toNumber();
@@ -114,28 +123,25 @@ export const getExchangeRate = async (symbol: any, amount: any) => {
   }
 };
 
-
-
 //function to get onRampExchangeRate based on the currency/rate specified
-export const getOnrampExchangeRate = async (symbol: any, amount: any, rates: any) => {
-  //return based on the currency specified
+export const getOnrampCurrencyExchangeRate = async (
+  fromCurrency: string,
+  toCurrency: string,
+  amount: number
+) => {
   try {
-    const response = await axios.get(
-      `https://api.coinbase.com/v2/exchange-rates?currency=${symbol}`
-    );
-
-    // Check if the response is successful
+    const response = await axios.get(`https://api.coinbase.com/v2/exchange-rates?currency=${fromCurrency}`);
     if (response.status === 200) {
       const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates[rates]) {
-        const baseCoinRate: number = data.data.rates[rates];
+      if (data && data.data && data.data.rates && data.data.rates[toCurrency]) {
+        const baseCoinRate: number = data.data.rates[toCurrency];
         // Adding 5% to the baseCoinRate (Onramp adjustment)
         const adjustedRate: number = baseCoinRate * 1.05;
-        // return the amount in the specified currency with the adjusted rate
+        // Calculate the amount in the specified currency with the adjusted rate
         const amountInCurrencyReceived: number = amount * adjustedRate;
         return amountInCurrencyReceived;
       } else {
-        console.log("No exchange rate data found for {currency}", rates);
+        console.log("No exchange rate data found for", toCurrency);
       }
     } else {
       console.log("Failed to fetch exchange rate from Coinbase API");
@@ -144,8 +150,14 @@ export const getOnrampExchangeRate = async (symbol: any, amount: any, rates: any
     console.log("Unable to get exchange rate", error);
   }
 };
+
+
 //function to get OffRampExchangeRate based on currency/rate specified
-export const getOfframpExchangeRate = async (symbol: any, amount: any, rates: any) => {
+export const getOfframpExchangeRate = async (
+  symbol: any,
+  amount: any,
+  rates: any
+) => {
   //return based on the currency specified
   try {
     const response = await axios.get(
@@ -183,8 +195,8 @@ export const getOnrampExchangeRateInKES = async (symbol: any, amount: any) => {
     // Check if the response is successful
     if (response.status === 200) {
       const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates['KES']) {
-        const baseCoinRate: number = data.data.rates['KES'];
+      if (data && data.data && data.data.rates && data.data.rates["KES"]) {
+        const baseCoinRate: number = data.data.rates["KES"];
         // Adding 5% to the baseCoinRate (Onramp adjustment)
         const adjustedRate: number = baseCoinRate * 1.05;
         // Return the amount in KES with the adjusted rate
@@ -210,8 +222,8 @@ export const getOffRampExchangeRateInKES = async (symbol: any, amount: any) => {
     // Check if the response is successful
     if (response.status === 200) {
       const data = response.data;
-      if (data && data.data && data.data.rates && data.data.rates['KES']) {
-        const baseCoinRate: number = data.data.rates['KES'];
+      if (data && data.data && data.data.rates && data.data.rates["KES"]) {
+        const baseCoinRate: number = data.data.rates["KES"];
         // Subtracting 5% from the baseCoinRate (OffRamp adjustment)
         const adjustedRate: number = baseCoinRate * 0.95;
         // Return the amount in KES with the adjusted rate
