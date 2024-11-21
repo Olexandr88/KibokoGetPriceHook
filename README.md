@@ -118,7 +118,7 @@ export const getPairPrice = async (pair: string) => {
 
 ## NPM Package Snapshot
 
-![Alt text](<IMG-20240127-WA0128%20(1).jpg>)
+![Alt text](https://github.com/KibokoDao-Africa/KibokoGetPriceHook/blob/main/public/IMG-20240127-WA0128%20(1).jpg)
 
 ## License
 
