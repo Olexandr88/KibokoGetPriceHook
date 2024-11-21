@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/kibokogetpricehook.svg)](https://www.npmjs.com/package/kibokogetpricehook)
 [![npm downloads](https://img.shields.io/npm/dt/kibokogetpricehook)](https://www.npmjs.com/package/kibokogetpricehook)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](./LICENSE)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/license/mit)
 [![Build Status](https://travis-ci.com/kibokogetpricehook/kibokogetpricehook.svg?branch=main)](https://travis-ci.com/kibokogetpricehook/kibokogetpricehook)
 [![Coverage Status](https://coveralls.io/repos/github/kibokogetpricehook/kibokogetpricehook/badge.svg?branch=main)](https://coveralls.io/github/kibokogetpricehook/kibokogetpricehook?branch=main)
 
@@ -118,8 +118,8 @@ export const getPairPrice = async (pair: string) => {
 
 ## NPM Package Snapshot
 
-![Alt text](<IMG-20240127-WA0128 (1).jpg>)
+![Alt text](<IMG-20240127-WA0128%20(1).jpg>)
 
 ## License
 
-This library is licensed under the [MIT License](./LICENSE).
+This library is licensed under the [MIT License](https://opensource.org/license/mit).
