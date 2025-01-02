@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/kibokogetpricehook.svg)](https://www.npmjs.com/package/kibokogetpricehook)
 [![npm downloads](https://img.shields.io/npm/dt/kibokogetpricehook)](https://www.npmjs.com/package/kibokogetpricehook)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://opensource.org/license/mit)
-[![Build Status](https://travis-ci.com/kibokogetpricehook/kibokogetpricehook.svg?branch=main)](https://travis-ci.com/kibokogetpricehook/kibokogetpricehook)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/KibokoDao-Africa/KibokoGetPriceHook/ci.yml?branch=main)](https://travis-ci.com/kibokogetpricehook/kibokogetpricehook)
 [![Coverage Status](https://coveralls.io/repos/github/kibokogetpricehook/kibokogetpricehook/badge.svg?branch=main)](https://coveralls.io/github/kibokogetpricehook/kibokogetpricehook?branch=main)
 
 The kibokogetpricehook package provides utility functions to fetch real-time financial data, including pair prices, exchange rates, and currency-specific exchange rates. It's designed for seamless integration with financial applications.
